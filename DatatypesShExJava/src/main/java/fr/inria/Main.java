@@ -18,8 +18,6 @@ import fr.inria.lille.shexjava.GlobalFactory;
 import fr.inria.lille.shexjava.schema.Label;
 import fr.inria.lille.shexjava.schema.ShexSchema;
 import fr.inria.lille.shexjava.schema.parsing.GenParser;
-import fr.inria.lille.shexjava.validation.FailureAnalyzer;
-import fr.inria.lille.shexjava.validation.FailureAnalyzerSimple;
 import fr.inria.lille.shexjava.validation.RecursiveValidation;
 import fr.inria.lille.shexjava.validation.RecursiveValidationWithMemorization;
 import fr.inria.lille.shexjava.validation.RefineValidation;
@@ -60,8 +58,6 @@ public class Main {
 		System.out.println("Refine validation:");
 		// create the validation algorithm
 		ValidationAlgorithm validation = new RefineValidation(schema, dataGraph);  
-		FailureAnalyzer fa = new FailureAnalyzerSimple();
-		validation.addFailureReportsCollector(fa);
 		//validate
 		validation.validate(focusNode, shapeLabel);
 		//check the result
@@ -72,8 +68,6 @@ public class Main {
 		System.out.println("Recursive validation:");
 		validation = new RecursiveValidation(schema, dataGraph);
 		validation.validate(focusNode, shapeLabel);
-		fa = new FailureAnalyzerSimple();
-		validation.addFailureReportsCollector(fa);
 		//check the result
 		result = validation.getTyping().isConformant(focusNode, shapeLabel);
 		System.out.println("Does "+focusNode+" has shape "+shapeLabel+"? "+result);
@@ -81,8 +75,6 @@ public class Main {
 		System.out.println();
 		System.out.println("Recursive validation with memorization:");
 		validation = new RecursiveValidationWithMemorization(schema, dataGraph);
-		fa = new FailureAnalyzerSimple();
-		validation.addFailureReportsCollector(fa);
 		validation.validate(focusNode, shapeLabel);
 		//check the result
 		result = validation.getTyping().isConformant(focusNode, shapeLabel);
